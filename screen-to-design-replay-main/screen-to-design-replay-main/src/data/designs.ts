@@ -55,6 +55,7 @@ export interface CardConfig {
   pattern: Pattern;
   accent: Accent;
   text: string;
+  lastFour: string;
   font: FontId;
   textPos: TextPos;
   issuer: IssuerId;
@@ -105,7 +106,7 @@ const seeds: Seed[] = [
   ["Industrial Carbon", "Industrial", "carbon", "graphite", "industrial", "silver", "Carbono técnico com marcações de série.", "Technical carbon with serial markings.", { materials: ["carbon", "matte"], colors: ["graphite", "black"] }],
   ["Industrial Titanium", "Industrial", "satin", "metalblue", "industrial", "silver", "Titânio de engenharia com grade de precisão.", "Engineering titanium with a precision grid.", { colors: ["metalblue", "graphite", "silver"] }],
   ["Amex Kehind", "American Express", "satin", "navy", "plain", "silver", "Design American Express Kehind.", "American Express Kehind design."],
-  ["Amex", "American Express", "satin", "navy", "plain", "silver", "Design American Express clássico.", "Classic American Express design."],
+  ["Amex", "American Express", "satin", "navy", "plain", "silver", "Design American Express clássico.", "Classic American Express design."] ,
 ];
 
 const slug = (s: string) => s.toLowerCase().replace(/\s+/g, "-");
@@ -132,7 +133,8 @@ export const getDesign = (id?: string): Design => DESIGNS.find((d) => d.id === i
 export const defaultConfig = (d: Design): CardConfig => ({
   designId: d.id,
   ...d.defaults,
-  text: "VANTA MEMBER",
+  text: "",
+  lastFour: "",
   font: "sans",
   textPos: "bottom-left",
   issuer: "none",
@@ -151,6 +153,7 @@ export function sanitizeConfig(c: CardConfig): CardConfig {
     pattern: pick(c.pattern, d.allowed.patterns, d.defaults.pattern),
     accent: pick(c.accent, d.allowed.accents, d.defaults.accent),
     text: (c.text ?? "").slice(0, TEXT_MAX),
+    lastFour: String(c.lastFour ?? "").replace(/\D/g, "").slice(0, 4),
     issuer: ISSUERS.some((item) => item.id === c.issuer) ? c.issuer : "none",
     network: NETWORKS.some((item) => item.id === c.network) ? c.network : "none",
   };

@@ -84,7 +84,7 @@ export function CardFront({ config, glare = 50 }: { config: CardConfig; glare?: 
         : `left-[7%] ${config.lastFour ? "bottom-[18%]" : "bottom-[9%]"}`;
 
   if (design.collection === "American Express") {
-    const image = design.id === "amex-kehind" ? "/amex%20kehind.jpeg" : "/amex.jpeg";
+    const image = design.id === "amex-kehind" ? "https://raw.githubusercontent.com/NatanAlbert/screen-to-design-replay/main/public/amex%20kehind.jpeg" : "https://raw.githubusercontent.com/NatanAlbert/screen-to-design-replay/main/public/amex.jpeg";
     return (
       <div className="@container absolute inset-0 overflow-hidden rounded-[4.6cqw] bg-[#071a36]">
         <img src={image} alt={design.name} className="absolute inset-0 h-full w-full object-cover" />
